@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <title>This is Css page</title>
+</head>
+<body>
+    <strong<h1>Testing chart.js</h1></strong>
+    <div id="chart"></div>
+    <script>
+
+    var data =[];
+    var data1=[];
+    var data2=[];
+    var data3=[];
+    var data4=[];
+    d3.csv("0312_result.csv", function(error, data){
+        for(var i=0;i<data.length;i++){
+                	  data1.push(parseFloat(data[i]["0"]));
+                	  data2.push(parseFloat(data[i]["78.42268372"])*1);
+                	  data3.push(parseFloat(data[i]["104.15"])*1);
+                	  data4.push(parseFloat(data[i]["25.72731628"])*1);
+                    }
+        
+                var chart = c3.generate({
+                    data: {
+                        columns: [
+                        ['78.42268372', data2[0], data2[1],data2[2], data2[3],data2[4], data2[5]],
+                        ['104.15', data3[0], data3[1],data3[2], data3[3],data3[4]]
+                        /*['25.72731628', data4[0], data4[1],data4[2], data4[3],data4[4], data4[5]]*/
+                        ]
+                    },
+    
+                });
+        for(var j=6;j<100;j++)
+        {
+            var examFunc = function(x) {
+                setTimeout(function() {
+                    chart.load({
+                        columns: [
+                        ['78.42268372', data2[x], data2[x+1],data2[x+2], data2[x+3],data2[x+4], data2[x+5]],
+                        ['104.15', data3[x], data3[x+1],data3[x+2], data3[x+3],data3[x+4]]
+                        /*['25.72731628', data4[x], data4[x+1],data4[x+2], data4[x+3],data4[x+4], data4[x+5]]*/
+                        ],
+                    });
+                }, x*1000);
+            }
+            examFunc(j)
+        };
+
+    });
+
+ /*
+    var data =[];
+    var data1=[];
+    var data2=[];
+    var data3=[];
+    var data4=[];
+    d3.csv("0312_result.csv", function(error, data){
+        for(var i=0;i<data.length;i++){
+                	  data1.push(parseFloat(data[i]["0"]));
+                	  data2.push(parseFloat(data[i]["78.42268372"])*1);
+                	  data3.push(parseFloat(data[i]["104.15"])*1);
+                	  data4.push(parseFloat(data[i]["25.72731628"])*1);
+                    }
+        
+                var chart = c3.generate({
+                    data: {
+                        columns: [
+                        ['78.42268372', data2[0], data2[1],data2[2], data2[3],data2[4], data2[5]],
+                        ['104.15', data3[0], data3[1],data3[2], data3[3],data3[4]],
+                        ['25.72731628', data4[0], data4[1],data4[2], data4[3],data4[4], data4[5]]
+                        ]
+                    },
+    
+                });
+        for(var j=5;j<100;j++)
+        {
+            var examFunc = function(x) {
+                setTimeout(function() {
+                    chart.flow({
+                        columns: [
+                        ['78.42268372', data2[x], data2[x+1],data2[x+2], data2[x+3],data2[x+4], data2[x+5]],
+                        ['104.15', data3[x], data3[x+1],data3[x+2], data3[x+3],data3[x+4]],
+                        ['25.72731628', data4[x], data4[x+1],data4[x+2], data4[x+3],data4[x+4], data4[x+5]]
+                        ]
+                    });
+                }, x*1500);
+            }
+            examFunc(j)
+        };
+
+    });
+
+
+/*
+    var data =[];
+    var data1=[];
+    var data2=[];
+    var data3=[];
+    var data4=[];
+    d3.csv("0312_result.csv", function(error, data){
+        for(var i=0;i<data.length;i++){
+                	  data1.push(parseFloat(data[i]["0"]));
+                	  data2.push(parseFloat(data[i]["78.42268372"])*1);
+                	  data3.push(parseFloat(data[i]["104.15"])*1);
+                	  data4.push(parseFloat(data[i]["25.72731628"])*1);
+                    }
+                console.log(data2)
+                
+        
+                var chart = c3.generate({
+                    data: {
+                        columns: [
+                        ['data1', data2[0], data2[1],data2[2], data2[3],data2[4], data2[5]],
+                        ['data2', data3[0], data3[1],data3[2], data3[3],data3[4], data3[5]],
+                        ['data3', data4[0], data4[1],data4[2], data4[3],data4[4], data4[5]]
+                        ]
+                    }
+                });
+        for(var j=1;j<10;j++)
+        {
+                setTimeout(function () {
+                    chart.load({
+                        columns: [
+                        ['data1', data2[j], data2[j+1],data2[j+2], data2[j+3],data2[j+4], data2[j+5]],
+                        ['data2', data3[j], data3[j+1],data3[j+2], data3[j+3],data3[j+4], data3[j+5]],
+                        ['data3', data4[j], data4[j+1],data4[j+2], data4[j+3],data4[j+4], data4[j+5]]
+                        ]
+                    });
+                }, 1000);
+         };
+    });
+    
+
+
+
+
+     var temp=[1,2,3,4];
+     var chart = c3.generate({
+    data: {
+        columns: [
+            ['data1', temp[0], temp[1], temp[2], temp[3]],
+            ['data2', 50, 20, 10, 40, 15, 25]
+        ]
+    }
+});
+
+setTimeout(function () {
+    chart.load({
+        columns: [
+            ['data1', 230, 190, 300, 500, 300, 400]
+        ]
+    });
+}, 1000);
+
+setTimeout(function () {
+    chart.load({
+        columns: [
+            ['data3', 130, 150, 200, 300, 200, 100]
+        ]
+    });
+}, 1500);
+
+setTimeout(function () {
+    chart.unload({
+        ids: 'data1'
+    });
+}, 2000);
+
+     
+     var data=new Array();
+          var data1 = [];
+          var data2 = [];
+          var data3 = [];
+          var data4 = [];
+          function excelExport(event){
+              //var input = event.target; {% endcomment %}
+              var reader = new FileReader();
+              reader.onload = function(){
+                  var fileData = "0312_result";
+                  var wb = XLSX.read(fileData, {type : 'binary'});
+                  wb.SheetNames.forEach(function(sheetName){
+                    var rowObj =XLSX.utils.sheet_to_json(wb.Sheets[sheetName]);
+               data=rowObj;
+                  });
+                	for(var i=0;i<data.length;i++){
+                	  data1.push(parseFloat(data[i]["A"])*1);
+                	  data2.push(parseFloat(data[i]["B"])*1);
+                	  data3.push(parseFloat(data[i]["C"])*1);
+                	  data4.push(parseFloat(data[i]["D"])*1);
+                	}
+                    
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+                columns : [
+                    ['data1', 1, 2, 3, 4]
+                ]
+
+            axis: {
+                x: {
+                    type: 'category',
+                     tick: {
+                        count: 12
+                        } 
+                    },
+                y: {
+                    tick:{
+                        format: function(d) {
+                            return d + "mm";
+                            }
+                        },
+                    }
+            },
+            point: {
+                show: false
+            },
+            color: {
+                pattern: ['#ff5f00', '#ffe082','#bdaba3']
+            },
+        });
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <style>
+    #container {
+      height: 400px;
+    }
+    .highcharts-figure,
+    .highcharts-data-table table {
+      min-width: 310px;
+      max-width: 800px;
+      margin: 1em auto;
+    }
+    .highcharts-data-table table {
+      font-family: Verdana, sans-serif;
+      border-collapse: collapse;
+      border: 1px solid #ebebeb;
+      margin: 10px auto;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+    .highcharts-data-table caption {
+      padding: 1em 0;
+      font-size: 1.2em;
+      color: #555;
+    }
+    .highcharts-data-table th {
+      font-weight: 600;
+      padding: 0.5em;
+    }
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+      padding: 0.5em;
+    }
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+      background: #f8f8f8;
+    }
+    .highcharts-data-table tr:hover {
+      background: #f1f7ff;
+    }
+  </style>
+  <figure class="highcharts-figure">
+    <div id="container">
+      <script>
+        var data = new Array();
+        var data1 = [];
+        var data2 = [];
+        var data3 = [];
+        var data4 = [];
+
+        d3.csv("0312_result_test.csv", function(error, data) {
+          for (var i = 0; i < data.length; i++) {
+            data1.push(parseFloat(data[i]["x"]) * 1);
+            data2.push(parseFloat(data[i]["78.42268372"]) * 1);
+            data3.push(parseFloat(data[i]["104.15"]) * 1);
+            data4.push(parseFloat(data[i]["25.72731628"]) * 1);
+          }
+          console.log(typeof data1);
+          console.log(data2);
+          console.log(data3);
+          console.log(data4);
+          //차트시작
+          Highcharts.chart("container", {
+            chart: {
+              zoomType: "xy",
+              events: {
+                load: function() {
+                  // set up the updating of the chart each second
+                  var series = this.series;
+                  var i = 0;
+                  var repeat = setInterval(function() {
+                    y = data2[i];
+                    series[0].addPoint([i, y], true, true);
+                    y = data3[i];
+                    series[1].addPoint([i + 1, y], true, true);
+                    y = data4[i];
+                    series[2].addPoint([i, y], true, true);
+                    i++;
+                    if (i > data2.length) {
+                      clearInterval(repeat);
+                    }
+                  }, 1000 * 1);
+                }
+              }
+            },
+            title: {
+              text: "result_test",
+              align: "left"
+            },
+            xAxis: [
+              {
+                crosshair: true,
+                min: 0
+              }
+            ],
+            yAxis: [
+              {
+                // Primary yAxis
+                labels: {
+                  format: "{value}1",
+                  style: {
+                    color: Highcharts.getOptions().colors[2]
+                  }
+                },
+                title: {
+                  text: " ",
+                  style: {
+                    color: Highcharts.getOptions().colors[2]
+                  }
+                },
+                opposite: true
+              },
+              {
+                // Secondary yAxis
+                gridLineWidth: 0,
+                title: {
+                  text: " ",
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                },
+                labels: {
+                  format: "{value} 3",
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                }
+              },
+              {
+                // Tertiary yAxis
+                gridLineWidth: 0,
+                title: {
+                  text: " ",
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                labels: {
+                  format: "{value} S",
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                opposite: true
+              }
+            ],
+            tooltip: {
+              shared: true
+            },
+            legend: {
+              layout: "horizontal",
+              align: "center",
+              x: 60,
+              verticalAlign: "top",
+              y: 20,
+              floating: true,
+              backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || // theme
+                "rgba(255,255,255,0.25)"
+            },
+            series: [
+              {
+                name: "78.42268372",
+                type: "spline",
+                yAxis: 1,
+                data: (function() {
+                  // generate an array of random data
+                  var data = [],
+                    i;
+                  for (i = 0; i < data2.length; i++) {
+                    data.push({ x: 0, y: data2[0] });
+                  }
+                  return data;
+                })(),
+                marker: {
+                  enabled: false
+                },
+                tooltip: {
+                  valueSuffix: " "
+                },
+                color: "#81BEF7"
+              },
+              {
+                name: "104.15",
+                type: "spline",
+                yAxis: 1,
+                data: (function() {
+                  // generate an array of random data
+                  var data = [],
+                    i;
+                  for (i = 1; i < data3.length; i++) {
+                    data.push({ x: 1, y: data3[0] });
+                  }
+                  return data;
+                })(),
+                marker: {
+                  enabled: false
+                },
+                tooltip: {
+                  valueSuffix: " "
+                },
+                color: "#BEF781"
+              },
+              {
+                name: "1",
+                type: "spline",
+                yAxis: 1,
+                data: (function() {
+                  // generate an array of random data
+                  var data = [],
+                    i;
+                  for (i = 0; i < data4.length; i++) {
+                    data.push({ x: 0, y: data[4] });
+                  }
+                  return data;
+                })(),
+                marker: {
+                  enabled: false
+                },
+                tooltip: {
+                  valueSuffix: " "
+                },
+                color: "#DF0101"
+              } /*
+                  responsive: {
+                      rules: [{
+                          condition: {
+                              maxWidth: 500
+                          },
+                          chartOptions: {
+                              legend: {
+                                  floating: false,
+                                  layout: 'horizontal',
+                                  align: 'center',
+                                  verticalAlign: 'bottom',
+                                  x: 0,
+                                  y: 0
+                              },
+                              yAxis: [{
+                                  labels: {
+                                      align: 'right',
+                                      x: 0,
+                                      y: -6
+                                  },
+                                  showLastLabel: false
+                              }, {
+                                  labels: {
+                                      align: 'left',
+                                      x: 0,
+                                      y: -6
+                                  },
+                                  showLastLabel: false
+                              }, {
+                                  visible: false
+                              }]
+                          }
+                      }]
+                  }*/
+            ]
+          });
+          // 차트 끝
+        });
+        reader.readAsBinaryString(input.files[0]);
+      </script>
+    </div>
+  </figure>
+</html>
