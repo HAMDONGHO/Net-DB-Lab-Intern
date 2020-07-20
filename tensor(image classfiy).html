@@ -10,22 +10,28 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
   </head>
   <body>
-    <img id="img" src="cat.jpeg" />
-    <!-- Place your code in the script tag below. You can also use an external .js file -->
+    <!--예제를 사용하기 위한 이미지 가져옴-->
+    <img id="img" src="dog.jpeg" />
+    <input type="button" value="무슨동물?" onclick="classi()" />
     <script>
       // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
       // available on the index-page because of the script tag above.
-
+      // 이미지 학습에 필요한 img태그 요소를 id로 가져옴
       const img = document.getElementById('img')
+      function classi () {
+        var arr = new Array()
+        mobilenet.load().then(model => {
+          model.classify(img, 4).then(predictions => {
+            console.log('Predictions: ')
 
-      // Load the model.
-      mobilenet.load().then(model => {
-        // Classify the image.
-        model.classify(img).then(predictions => {
-          console.log('Predictions: ')
-          console.log(predictions)
+            for (var i = 0; i < predictions.length; i++) {
+              arr[i] = predictions[i]
+            }
+            console.log(arr)
+            return arr
+          })
         })
-      })
+      }
     </script>
   </body>
 </html>
