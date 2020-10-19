@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>test</title>
+
+</head>
+<body>
+    <h1>Hi!</h1>
+    <div></div>
+    <script>
+               $(function() {
+                   $('div').text("hello world");      
+               });
+        /*
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+        
+        //usage:
+        readTextFile("/Users/hamdongho/WebProject/ITDB/차세정 데이터 모음/json_test.json", function(text){
+            var data = JSON.parse(text);
+            console.log(data);
+        });
+        */
+        /*
+        var jsonLocation = '${ctx}/json_test.json';
+        $.getJSON(jsonLocation, function(data){
+            $each(data, function(I, item){
+                console.log(item.name);
+                });
+            });
+        */
+        $(function(){
+            $.ajax({
+                url: "json_test.json",
+                dataType: "json",
+                success: function(data){
+                    $.each(data, function(index, item){
+                        console.log(item.id + ":" +item.name);
+                        console.log(item.phone)
+                        console.log(item.phone.home)
+                        })
+                        }
+                        })
+                        })
+    </script>
+</body>
+</html>
