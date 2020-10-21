@@ -10,7 +10,10 @@
 <body>
     <h1>Hi!</h1>
     <div></div>
+    <p id= set></p>
+
     <script>
+        var test = []
                $(function() {
                    $('div').text("hello world");      
                });
@@ -47,10 +50,34 @@
                 dataType: "json",
                 success: function(data){
                     $.each(data, function(index, item){
-                        console.log(item.id + ":" +item.name);
-                        console.log(item.phone)
-                        console.log(item.phone.home)
+                        test.push(data[index])
+                        //console.log(test[index])
+                        //console.log(test)
+                        //console.log(keytest[0])
+                        //test = item
+                        //console.log(test)
                         })
+
+                        console.log(test)
+                        var keytest = Object.keys(test[0])
+                        
+                        if(keytest.includes("id")){
+                            switch(test[2].id){
+                                case 'c200':
+                                console.log('My name is ' + test[0].name)
+                                break
+
+                                case 'c201':
+                                console.log('My name is ' + test[1].name)
+                                break
+
+                                case 'c208':
+                                console.log('My name is ' + test[2].name)
+
+                                default:
+                                console.log('Hi')
+                            }
+                        }
                         }
                         })
                         })
