@@ -1,0 +1,18 @@
+[
+    {
+        "file name" : "example",
+        "description": "구현 테스트 중",
+        "layer" : {
+            "model" : "sequential",
+            "add" : {
+                "type" : "dense",
+                "unit" : "1",
+                "inputshape" : "[1]"
+            },
+            "compile" : {
+                "loss" : "meanSquaredError",
+                "optimizer" : "sgd"
+            }
+        }
+    }
+]

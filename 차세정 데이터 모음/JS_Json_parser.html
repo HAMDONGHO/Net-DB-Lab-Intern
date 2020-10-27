@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>test</title>
+
+</head>
+<body>
+    <h1>Hi!</h1>
+    <div></div>
+    <p id= set></p>
+
+    <script>
+        var test = []
+               $(function() {
+                   $('div').text("hello world");      
+               });
+        /*
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+        
+        //usage:
+        readTextFile("/Users/hamdongho/WebProject/ITDB/차세정 데이터 모음/json_test.json", function(text){
+            var data = JSON.parse(text);
+            console.log(data);
+        });
+        */
+        /*
+        var jsonLocation = '${ctx}/json_test.json';
+        $.getJSON(jsonLocation, function(data){
+            $each(data, function(I, item){
+                console.log(item.name);
+                });
+            });
+        */
+
+        $(function(){
+            $.ajax({
+                url: "model_create.json",
+                dataType: "json",
+                success: function(data){
+                    $.each(data, function(index, item){
+                        test.push(data[index])
+                        //console.log(test[index])
+                        //console.log(test)
+                        //console.log(keytest[0])
+                        //test = item
+                        //console.log(test)
+                        })
+
+                        console.log(test[0])
+                        var keytest = Object.keys(test[0])
+                        console.log(keytest)
+                        
+                        if(keytest.includes("layer")){
+                            switch(test[0].layer.add.type){
+                                case 'dense':
+                                var query = ''
+                                if (test[0].layer.add.unit != null){
+                                    query = query + " unit: " + test[0].layer.add.unit
+                                }
+
+                                if (test[0].layer.add.inputshape != null){
+                                    query = query + " inpustshape" + test[0].layer.add.inputshape
+                                }
+
+                                default:
+                                console.log('result:' + query )
+                            }
+                        }
+                        }
+                        })
+                        })
+    </script>
+</body>
+</html>
