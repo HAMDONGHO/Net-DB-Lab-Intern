@@ -14,6 +14,8 @@
 
     <script>
         var test = []
+        let query = 'model.'
+
                $(function() {
                    $('div').text("hello world");      
                });
@@ -60,28 +62,59 @@
                         })
 
                         console.log(test[0])
-                        var keytest = Object.keys(test[0])
+                        var keytest = Object.keys(test[0].layer)
                         console.log(keytest)
+
+                        console.log(keytest.length)
                         
-                        if(keytest.includes("layer")){
-                            switch(test[0].layer.add.type){
-                                case 'dense':
-                                var query = ''
-                                if (test[0].layer.add.unit != null){
-                                    query = query + " unit: " + test[0].layer.add.unit
-                                }
-
-                                if (test[0].layer.add.inputshape != null){
-                                    query = query + " inpustshape" + test[0].layer.add.inputshape
-                                }
-
-                                default:
-                                console.log('result:' + query )
+                        for (var i = 0; i<keytest.length; i++){
+                            /*
+                            if (keytest[i] == "model"){
+                                query = query + keytest[i] + "{"
+                                var model_json = test[0].layer.compile
+                                $.each(model_json, function(key, value){
+                                    query = query + key + ": "+ value +","
+                                })
                             }
-                        }
-                        }
-                        })
-                        })
+                            */
+                            if (keytest[i] == "add"){
+                                var count = 1
+                                query = query + keytest[i] + "{"
+                                var add_json = test[0].layer.add
+                                var add_length = Object.keys(test[0].layer.add).length
+                                $.each(add_json, function(key, value){
+                                    if (count < add_length){
+                                        query = query + key + ": "+ value + ", "
+                                        count += 1
+                                    }
+                                    else{
+                                        query = query + key + ": "+ value
+                                    }
+                                })
+                            }
+                            /*
+                            if (keytest[i] == "compile"){
+                                var count = 1
+                                query = query + keytest[i] + "{"
+                                var compile_json = test[0].layer.compile
+                                var compile_length = Object.keys(test[0].layer.compile).length
+                                $.each(compile_json, function(key, value){
+                                    if (count < compile_length){
+                                        query = query + key + ": "+ value + ", "
+                                        count += 1
+                                    }
+                                    else{
+                                        query = query + key + ": "+ value
+                                    }
+                                })
+                            }
+                            */
+                            }
+                            query = query + "}"
+                            console.log(query)
+                }
+            })
+        })
     </script>
 </body>
 </html>
